@@ -24,6 +24,7 @@ public class ScoreList : MonoBehaviour
     }
 
     void Start(){
+        // LOAD HIGHSCORE DATA
         Load();
     }
 

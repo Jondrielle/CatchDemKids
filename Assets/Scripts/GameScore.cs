@@ -18,6 +18,7 @@ public class GameScore : MonoBehaviour
     [Header("HighScore Variables")]
     public int highScore = 0;
     public TextMeshProUGUI highScoreText;
+    public TextMeshProUGUI newHighScoreText;
 
     //gameScoreText.text += " " + gameScore; 
 
@@ -32,19 +33,20 @@ public class GameScore : MonoBehaviour
     public void UpdateScore()
     {
         gameScore += 100;
-        gameScoreText.text = "Score \n" + gameScore;
+        gameScoreText.text = "Score " + gameScore;
+    }
 
+    // CHECKS IF SCORE MADE IT TO THE LEADERBOARD
+    public void LeaderBoardCheck(){
+        //Save();
         if(gameScore > highScore){
-            print("GameScore:" + gameScore);
-            ScoreList.instance.AddScore(gameScore);
-            Save();
+            print("New Highscore");
+            highScore = gameScore;
             highScoreText.text = "HighScore \n" + highScore;
+            newHighScoreText.text = $"New HighScore:\n {highScore}";
+            //ScoreList.instance.AddScore(gameScore);
+            Save();
         }
-
-        //RESET HIGHSCORE TO 0
-        // Save();
-        // highScoreText.text = "HighScore \n" + highScore;
-        
     }
 
     // SAVE HIGHSCORE COUNT

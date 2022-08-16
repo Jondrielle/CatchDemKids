@@ -18,6 +18,7 @@ public class SpawnManager : MonoBehaviour
         StartSpawning();
     }
 
+    // SPAWN PREFABS
     void SpawnRandomPrefabs(GameObject[] prefabsList)
     {
         int prefabIndex = Random.Range(0, prefabsList.Length);
@@ -26,20 +27,24 @@ public class SpawnManager : MonoBehaviour
         Instantiate(prefabsList[prefabIndex], spawnPos, prefabsList[prefabIndex].transform.rotation);
     }
 
+    // SPAWNS POWERUP PREFABS
     public void SpawnPowerUps(){
         SpawnRandomPrefabs(powerupPrefabs);
     }
 
+    // SPAWNS CHILDREN PREFABS
     public void SpawnAnimals(){
         SpawnRandomPrefabs(animalPrefabs);
     }
 
+    // STOPS SPAWNING ONCE GAME ENDS
     public void StopSpawning(){
         CancelInvoke();
     }
 
+    // STARTS SPAWNING ONCE GAME STARTS
     public void StartSpawning(){
         InvokeRepeating("SpawnAnimals", startDelay, spawnInterval);
-        InvokeRepeating("SpawnPowerUps", startDelay, spawnIntervalMax);
+        InvokeRepeating("SpawnPowerUps", 6, spawnInterval);
     }
 }

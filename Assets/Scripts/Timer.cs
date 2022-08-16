@@ -12,13 +12,17 @@ public class Timer : MonoBehaviour
     public int timerLimit;
     public int currentTime;
 
+    /*
+        DISPLAYS COUNTDOWN TIMER AND 
+        STARTS COROUTINE FOR TIMER
+    */
     void Start() {
        // currentTime = timerLimit;
         timerText.text = $"{currentTime}";
         StartCoroutine(TimerLimit());   
     }
 
-    //
+    // GAME COUNTDOWN TIMER
     IEnumerator TimerLimit(){
         while(timerLimit != 0){
             timerText.text = $"{timerLimit}";
