@@ -17,7 +17,6 @@ public class Timer : MonoBehaviour
         STARTS COROUTINE FOR TIMER
     */
     void Start() {
-       // currentTime = timerLimit;
         timerText.text = $"{currentTime}";
         StartCoroutine(TimerLimit());   
     }
@@ -32,6 +31,4 @@ public class Timer : MonoBehaviour
         timerText.text = $"{timerLimit}";
         GameEnded.Invoke();
     }
-
-
 }
