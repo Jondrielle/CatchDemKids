@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
+using UnityEngine.Events;
 using TMPro;
 
 public class SetText : MonoBehaviour
@@ -9,7 +11,8 @@ public class SetText : MonoBehaviour
     public TextMeshProUGUI title;
     public TextMeshProUGUI body;
     public bool isInstructions;
-
+    public ScoreList scoreList;
+    public UnityEvent clearText;
 
     public void SetTitle(bool isInstructions){
         if(isInstructions == true){
@@ -25,7 +28,15 @@ public class SetText : MonoBehaviour
             body.text = "This is the body text for instructions";
         }
         else {
-            body.text = "This is the body text for highscores";
+            foreach(int score in scoreList.scores)
+            {
+                body.text += $"ABC {score} \n";
+            }
         }
+    }
+
+    public void ClearBody()
+    {
+        body.text = "";
     }
 }

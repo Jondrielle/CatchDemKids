@@ -45,4 +45,10 @@ public class Cooldown : MonoBehaviour
             barCoolDown.value -= valueDifference;
         }
     }
+
+    public void SetEmpty()
+    {
+        StopAllCoroutines();
+        barCoolDown.value = 0;
+    }
 }

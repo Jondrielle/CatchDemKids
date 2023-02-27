@@ -19,11 +19,15 @@ public class GameScore : MonoBehaviour
     public int highScore = 0;
     public TextMeshProUGUI highScoreText;
     public TextMeshProUGUI newHighScoreText;
+    public int[] scores = new int[10];
+    public Queue<int> scores1 = new Queue<int>();
+    int elementCounter = 0;
 
     //gameScoreText.text += " " + gameScore; 
 
     void Start(){
         // LOAD HIGHSCORE
+        //Save();
         Load();
         gameScoreText.text = "Score " + gameScore;
         highScoreText.text = "HighScore " + highScore;
@@ -38,14 +42,18 @@ public class GameScore : MonoBehaviour
 
     // CHECKS IF SCORE MADE IT TO THE LEADERBOARD
     public void LeaderBoardCheck(){
-        //Save();
-        if(gameScore > highScore){
-            print("New Highscore");
+        if(gameScore > highScore && !(scores1.Contains(gameScore)) ){
             highScore = gameScore;
             highScoreText.text = "HighScore \n" + highScore;
             newHighScoreText.text = $"New HighScore:\n {highScore}";
-            //ScoreList.instance.AddScore(gameScore);
+            AddScore(highScore);
             Save();
+            Load();
+        }
+        else
+        {
+            highScoreText.text = "HighScore \n" + scores[scores.Length - 1];
+            newHighScoreText.text = $"New HighScore:\n";
         }
     }
 
@@ -54,7 +62,8 @@ public class GameScore : MonoBehaviour
         BinaryFormatter bF = new BinaryFormatter();
         FileStream file = File.Open(Application.persistentDataPath + "/ScoreConatiner.dat",FileMode.Create);
         ScoreContainer scoreContainer = new ScoreContainer();
-        scoreContainer.highScore = gameScore;
+        //scoreContainer.highScores.Clear();
+        scoreContainer.highScores = scores1;
         bF.Serialize(file,scoreContainer);
         file.Close();
     }
@@ -65,17 +74,32 @@ public class GameScore : MonoBehaviour
             BinaryFormatter bF = new BinaryFormatter();
             FileStream file = File.Open(Application.persistentDataPath + "/ScoreConatiner.dat",FileMode.Open);
             ScoreContainer scoreContainer = (ScoreContainer)bF.Deserialize(file);
+            Array.Clear(scores,0,scores.Length);
+            scoreContainer.highScores.CopyTo(scores, 0);
+            scores1 = scoreContainer.highScores;
+            Array.Sort(scores);
             file.Close();
-            highScore = scoreContainer.highScore;
         }
     }
 
-    public void CallPrint(){
-        ScoreList.instance.PrintScore();
+
+    public void AddScore(int newScore)
+    {
+        if (scores1.Count < 10)
+        {
+            scores1.Enqueue(newScore);
+        }
+        else
+        {
+            scores1.Dequeue();
+            scores1.Enqueue(newScore);
+        }
     }
+
 }
 
 [Serializable]
 public class ScoreContainer{
     public int highScore;
+    [SerializeField] public Queue<int> highScores = new Queue<int>();
 }

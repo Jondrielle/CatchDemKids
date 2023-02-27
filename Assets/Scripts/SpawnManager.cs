@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SpawnManager : MonoBehaviour
 {
-    public GameObject[] animalPrefabs;
+    public GameObject[] childPrefabs;
     public GameObject[] powerupPrefabs;
     public float spawnRangeX = 20;
     public float spawnPosZ = 20;
@@ -34,12 +34,28 @@ public class SpawnManager : MonoBehaviour
 
     // SPAWNS CHILDREN PREFABS
     public void SpawnAnimals(){
-        SpawnRandomPrefabs(animalPrefabs);
+        SpawnRandomPrefabs(childPrefabs);
     }
 
     // STOPS SPAWNING ONCE GAME ENDS
     public void StopSpawning(){
         CancelInvoke();
+        DestroyAllSpawns();
+    }
+
+    public void DestroyAllSpawns()
+    {
+        GameObject[] childPrefabArray = GameObject.FindGameObjectsWithTag("Child");
+        //GameObject[] powerUpArray = GameObject.FindObjectsOfType<powerupPrefabs>();
+
+        for (int i = 0; i < childPrefabArray.Length; i++)
+        {
+            Destroy(childPrefabArray[i]);
+        }
+       // for (int i = 0; i < powerUpArray.Length; i++)
+        //{
+          //  Destroy(powerUpArray[i]);
+        //}
     }
 
     // STARTS SPAWNING ONCE GAME STARTS
