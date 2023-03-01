@@ -27,7 +27,6 @@ public class GameScore : MonoBehaviour
 
     void Start(){
         // LOAD HIGHSCORE
-        //Save();
         Load();
         gameScoreText.text = "Score " + gameScore;
         highScoreText.text = "HighScore " + highScore;
@@ -62,7 +61,6 @@ public class GameScore : MonoBehaviour
         BinaryFormatter bF = new BinaryFormatter();
         FileStream file = File.Open(Application.persistentDataPath + "/ScoreConatiner.dat",FileMode.Create);
         ScoreContainer scoreContainer = new ScoreContainer();
-        //scoreContainer.highScores.Clear();
         scoreContainer.highScores = scores1;
         bF.Serialize(file,scoreContainer);
         file.Close();
